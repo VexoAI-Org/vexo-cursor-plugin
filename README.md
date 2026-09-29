@@ -54,6 +54,22 @@ The complete hosted workflow is still under development. Required backend work:
 
 Installing the plugin does not provision Cursor model access, API credentials or a cloud worker. Authenticated plugin testing and hosted execution acceptance testing remain pending.
 
+## Production MCP endpoint
+
+The plugin connects to Vexo's existing production backend:
+
+| Setting | Value |
+| --- | --- |
+| Render service | `vexo-backend` |
+| Render environment | `Production` |
+| Runtime environment | `NODE_ENV=production` |
+| MCP URL | `https://vexo-backend-uj6z.onrender.com/mcp` |
+| OAuth issuer | `https://vexo-backend-uj6z.onrender.com` |
+
+Verified against the Render API on September 29, 2026. The separate `vexo-backend-studio-preview` service is not used by this plugin. The `onrender.com` address is Render's service hostname; it is not a staging designation.
+
+The development status above describes the complete Cursor integration, not the environment hosting the existing MCP service. This distinction does not establish that hosted execution or authenticated Cursor acceptance testing is complete, or that production/staging credential isolation has been audited.
+
 ## Developer testing: MCP sign-in
 
 You need Cursor with plugin support and an existing Vexo account with captured data. Use the normal Vexo sign-in and approval flow presented by the MCP client. The server advertises OAuth authorization-code flow with PKCE and dynamic client registration; there is no shared API key in this package.
@@ -64,7 +80,7 @@ The MCP endpoint is:
 https://vexo-backend-uj6z.onrender.com/mcp
 ```
 
-This is an unreleased development package. Marketplace publication and complete authenticated acceptance testing remain pending.
+The complete Cursor integration remains unreleased. The configured MCP endpoint is the production service identified above; complete authenticated acceptance testing remains pending.
 
 For local testing, copy this directory into `~/.cursor/plugins/local/vexo`, reload Cursor, and check the plugin components under Customize. The local copy must be a real directory; do not use a symlink pointing outside the local plugin directory. Local plugin imports must be permitted by your organization. Follow [Cursor's plugin instructions](https://cursor.com/docs/plugins).
 
