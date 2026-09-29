@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 import re
-import struct
+import xml.etree.ElementTree as ET
 root=Path(__file__).resolve().parents[1]
 m=json.loads((root/'.cursor-plugin/plugin.json').read_text())
 assert re.fullmatch(r'[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?',m['name'])
@@ -19,8 +19,12 @@ for p in (root/'commands').glob('*.md'):
  content=p.read_text();assert content.startswith('---\n')
  front=content.split('---',2)[1]
  assert re.search(r'^name: .+',front,re.M) and re.search(r'^description: .+',front,re.M)
-logo=(root/m['logo']).read_bytes();assert logo[:8]==b'\x89PNG\r\n\x1a\n'
-w,h=struct.unpack('>II',logo[16:24]);assert w==h and w>=256
+logo=ET.parse(root/m['logo']).getroot()
+assert logo.tag=='{http://www.w3.org/2000/svg}svg'
+w,h=(float(logo.attrib[key]) for key in ('width','height'))
+assert w==h and w>=256
+viewbox=[float(value) for value in logo.attrib['viewBox'].split()]
+assert len(viewbox)==4 and viewbox[2]==viewbox[3] and viewbox[2]>0
 for p in root.rglob('*'):
  if p.is_file() and '.git' not in p.parts:
   assert p.name not in {'.env','credentials.json','auth.json'}
