@@ -1,8 +1,8 @@
 {
   "name": "vexo",
   "displayName": "Vexo",
-  "version": "0.2.0",
-  "description": "Turn conversations captured by Vexo into working code with Cursor. Retrieve relevant context, implement requested changes, run tests, and report results.",
+  "version": "0.2.1",
+  "description": "Bring Vexo conversation context into Cursor to implement and test coding tasks. Built toward execution on Cursor-hosted cloud agents.",
   "author": {
     "name": "Vexo",
     "email": "support@vexoai.com"

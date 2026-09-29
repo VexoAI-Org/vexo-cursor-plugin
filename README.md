@@ -1,8 +1,10 @@
 # Vexo for Cursor
 
-Turn conversations into working code with Cursor.
+From spoken requests to working code with Cursor-hosted agents.
 
-[Vexo](https://vexoai.com) is an AI bracelet that remembers conversations and helps you follow through. This plugin brings relevant conversation context into Cursor so its agent can implement requested changes, run tests, and report what it actually completed.
+[Vexo](https://vexoai.com) is an AI bracelet that remembers conversations and helps you follow through. We're building an integration that turns coding requests from those conversations into work performed by Cursor's agents on Cursor-hosted cloud machines, with progress and results returned to Vexo.
+
+This repository contains the plugin that brings Vexo context and coding workflows into Cursor. The hosted task-dispatch and result-return integration is still to be implemented. See [the proposed marketplace description](MARKETPLACE.md).
 
 Examples:
 
@@ -18,15 +20,37 @@ Examples:
 - `vexo-brief`: turn that context into a grounded implementation brief.
 - `vexo-execute`: use that context to implement a requested task with Cursor's coding tools, validate changes, and report results.
 
-## Execution and integration status
+## Cursor-hosted execution
 
-Cursor performs code edits and runs commands with the permissions of its current session. Vexo's existing MCP connection retrieves conversation context; its `vexo:read` scope describes access to Vexo records, not a restriction on Cursor's coding tools. Publishing changes follows the user's task authorization.
+The target workflow is:
 
-The broader integration is intended to let Vexo dispatch coding tasks identified in conversation to Cursor, execute them on the user's cloud computer, and return progress, changes, test results, and verified commit or PR links to Vexo.
+```mermaid
+flowchart LR
+    A[Spoken request] --> B[Vexo context and task queue]
+    B --> C[Cursor Cloud Agents API or cloud SDK runtime]
+    C --> D[Cursor-hosted machine implements and tests]
+    D --> E[Vexo receives results and verified PR links]
+    E --> F[User feedback]
+    F --> B
+```
 
-That background execution connection is not implemented by this package yet. The current package provides conversation retrieval and command instructions for an active Cursor session. It has no background task dispatcher, task-claim API, result synchronization, or Cursor usage accounting. Installing the plugin does not provision Cursor model access or API credentials. Authenticated end-to-end acceptance testing remains pending.
+Vexo will select the authorized task and repository, supply relevant context, track task state and spending, and present the result. Cursor will host the coding environment and execute the agent. This design does not require Vexo to provision a separate coding VM for each user.
 
-For Vexo-managed execution, the backend must connect its durable task system to a supported Cursor runtime. Cursor documents a [TypeScript SDK](https://cursor.com/docs/sdk/typescript) with local and cloud runtimes, a [headless CLI](https://cursor.com/docs/cli/headless), and a [Cloud Agents API](https://cursor.com/docs/cloud-agent/api/endpoints). The SDK's local runtime is a candidate for execution on an existing Vexo cloud computer; compatibility, account access, isolation, cancellation, recovery and usage accounting must be validated before production use. Marketplace distribution and programmatic execution are separate parts of the integration.
+The execution connection belongs in Vexo's backend, using the [Cloud Agents API](https://cursor.com/docs/cloud-agent/api/endpoints) or the [TypeScript SDK's cloud runtime](https://cursor.com/docs/sdk/typescript). The backend can send a task and its context directly; installing this marketplace plugin is not a prerequisite for API dispatch. The plugin supplies reusable Vexo context and workflow instructions wherever supported and configured in Cursor.
+
+## Current status and remaining work
+
+The package currently contains MCP connection settings and three command instructions for a Cursor session. Cursor can use its own coding tools to implement and test an authorized request. The MCP server's existing `vexo:read` scope governs access to Vexo records; it does not restrict Cursor's code-editing tools.
+
+Hosted execution is the integration target, not a capability already delivered by this package. Remaining backend work:
+
+- Establish Cursor account access, billing and repository authorization for each customer. A GitHub connection to Vexo alone does not establish Cursor access.
+- Dispatch a durable Vexo task to a Cursor cloud agent and record the returned agent/run IDs. Recover uncertain requests without blindly launching duplicate work.
+- Collect progress and artifacts, handle follow-up requests and cancellation, and synchronize terminal results to the Vexo app.
+- Enforce user budgets and concurrency limits using the usage information available from Cursor. Measure startup latency and cost per completed task.
+- Verify changes, test evidence and commit/PR links before reporting success. Apply the task's publication permissions; keep merge and deployment decisions explicit.
+
+Installing the plugin does not provision Cursor model access, API credentials or a cloud worker. Authenticated plugin testing and hosted execution acceptance testing remain pending.
 
 ## Requirements and sign-in
 
@@ -62,5 +86,7 @@ Retrieved data is provided to the Cursor session to answer your request. The pac
 ## Validation
 
 Run `python3 scripts/validate.py` to check package structure. Public endpoint checks verify OAuth discovery and rejection of unauthenticated MCP requests; they do not establish that authenticated tool calls succeed. Before submission, complete sign-in from Cursor, test a transcript search on the intended account, and verify revocation.
+
+Before describing hosted execution as available, verify a real spoken request through Vexo task creation, Cursor cloud execution, recorded checks, a verified PR, and the result displayed in Vexo. Also verify cancellation, recovery without duplicate execution, customer isolation and usage attribution.
 
 Support: support@vexoai.com
