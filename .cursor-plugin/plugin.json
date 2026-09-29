@@ -1,0 +1,24 @@
+{
+  "name": "vexo",
+  "displayName": "Vexo",
+  "version": "0.1.0",
+  "description": "Bring conversations remembered by Vexo into Cursor. Find decisions, requirements, and commitments, and use that context to plan your next steps.",
+  "author": {
+    "name": "Vexo",
+    "email": "support@vexoai.com"
+  },
+  "homepage": "https://vexoai.com",
+  "keywords": [
+    "vexo",
+    "conversations",
+    "memory",
+    "transcripts",
+    "context",
+    "mcp"
+  ],
+  "category": "integrations",
+  "logo": "assets/logo.png",
+  "mcpServers": "./mcp.json",
+  "commands": "./commands/",
+  "repository": "https://github.com/VexoAI-Org/vexo-cursor-plugin"
+}

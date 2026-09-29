@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "vexo": {
+      "type": "http",
+      "url": "https://vexo-backend-uj6z.onrender.com/mcp"
+    }
+  }
+}
