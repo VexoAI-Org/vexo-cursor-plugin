@@ -2,11 +2,13 @@
 
 ## Description
 
-Vexo turns real-world conversations into coding tasks. Our AI bracelet remembers the context, decisions, and requests people share throughout their day. We're integrating Cursor's agents and models to carry out those tasks on Cursor-hosted cloud machines: implementing changes, running tests, and returning progress and verified commit or pull-request links to the Vexo app. This plugin brings Vexo's conversation context and coding workflows into Cursor, connecting what users say to the work they want done.
+We're building Vexo for Cursor to turn spoken requests into completed coding tasks. Vexo's AI bracelet remembers the conversations, decisions, and context behind each request. The integration connects that context to Cursor's agents and models, with execution on Cursor-hosted cloud machines: implementing changes, running tests, and returning progress, results, and verified commit or pull-request links to the Vexo app. Users will be able to follow the work and request changes through Vexo, without managing a coding computer themselves.
 
-## Implementation status
+## Release scope and status
 
-The repository currently packages the Vexo MCP connection and commands for retrieving context, preparing briefs, and implementing requested changes in a Cursor session. Automated cloud dispatch and results returned to Vexo are planned backend work. The description intentionally says "we're integrating"; do not present the complete hosted workflow as launched until end-to-end acceptance passes.
+There is one planned user release: the complete conversation-to-Cursor-execution-to-Vexo-results workflow. This repository holds the public plugin components; task dispatch, authorization and result synchronization belong in Vexo's private backend.
+
+The integration is in development and has not passed end-to-end acceptance. The description presents the release we are building, not a claim that it is already available. Component validation does not establish that the full product is ready to ship.
 
 ## Submission fields
 

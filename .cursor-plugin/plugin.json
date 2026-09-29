@@ -2,7 +2,7 @@
   "name": "vexo",
   "displayName": "Vexo",
   "version": "0.2.1",
-  "description": "Bring Vexo conversation context into Cursor to implement and test coding tasks. Built toward execution on Cursor-hosted cloud agents.",
+  "description": "Vexo integration in development: turn spoken requests into coding tasks executed by Cursor-hosted agents, with progress and results returned to Vexo.",
   "author": {
     "name": "Vexo",
     "email": "support@vexoai.com"
