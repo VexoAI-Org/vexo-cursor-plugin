@@ -1,22 +1,32 @@
 # Vexo for Cursor
 
-Bring the context from your conversations into your coding workflow.
+Turn conversations into working code with Cursor.
 
-[Vexo](https://vexoai.com) is an AI bracelet that remembers conversations and helps you follow through. This plugin connects Cursor to your Vexo account so you can find what was discussed and use it while planning or implementing your work.
+[Vexo](https://vexoai.com) is an AI bracelet that remembers conversations and helps you follow through. This plugin brings relevant conversation context into Cursor so its agent can implement requested changes, run tests, and report what it actually completed.
 
 Examples:
 
 - “What did we decide about onboarding yesterday?”
 - “Find the conversation where we discussed the checkout issue.”
 - “Use our discussion about notifications to draft an implementation brief.”
+- “Implement the onboarding changes we discussed yesterday and run the relevant tests.”
 
 ## What is included
 
 - A remote MCP connection to Vexo's existing service.
 - `vexo-context`: retrieve relevant conversation context with dates and times when available.
 - `vexo-brief`: turn that context into a grounded implementation brief.
+- `vexo-execute`: use that context to implement a requested task with Cursor's coding tools, validate changes, and report results.
 
-The plugin is read-only with respect to Vexo data. Cursor can help plan or edit code when you request it; the connector itself does not run background tasks or write to Vexo.
+## Execution and integration status
+
+Cursor performs code edits and runs commands with the permissions of its current session. Vexo's existing MCP connection retrieves conversation context; its `vexo:read` scope describes access to Vexo records, not a restriction on Cursor's coding tools. Publishing changes follows the user's task authorization.
+
+The broader integration is intended to let Vexo dispatch coding tasks identified in conversation to Cursor, execute them on the user's cloud computer, and return progress, changes, test results, and verified commit or PR links to Vexo.
+
+That background execution connection is not implemented by this package yet. The current package provides conversation retrieval and command instructions for an active Cursor session. It has no background task dispatcher, task-claim API, result synchronization, or Cursor usage accounting. Installing the plugin does not provision Cursor model access or API credentials. Authenticated end-to-end acceptance testing remains pending.
+
+For Vexo-managed execution, the backend must connect its durable task system to a supported Cursor runtime. Cursor documents a [TypeScript SDK](https://cursor.com/docs/sdk/typescript) with local and cloud runtimes, a [headless CLI](https://cursor.com/docs/cli/headless), and a [Cloud Agents API](https://cursor.com/docs/cloud-agent/api/endpoints). The SDK's local runtime is a candidate for execution on an existing Vexo cloud computer; compatibility, account access, isolation, cancellation, recovery and usage accounting must be validated before production use. Marketplace distribution and programmatic execution are separate parts of the integration.
 
 ## Requirements and sign-in
 

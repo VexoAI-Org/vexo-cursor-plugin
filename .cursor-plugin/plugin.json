@@ -1,8 +1,8 @@
 {
   "name": "vexo",
   "displayName": "Vexo",
-  "version": "0.1.0",
-  "description": "Bring conversations remembered by Vexo into Cursor. Find decisions, requirements, and commitments, and use that context to plan your next steps.",
+  "version": "0.2.0",
+  "description": "Turn conversations captured by Vexo into working code with Cursor. Retrieve relevant context, implement requested changes, run tests, and report results.",
   "author": {
     "name": "Vexo",
     "email": "support@vexoai.com"
@@ -14,6 +14,8 @@
     "memory",
     "transcripts",
     "context",
+    "coding",
+    "tasks",
     "mcp"
   ],
   "category": "integrations",
