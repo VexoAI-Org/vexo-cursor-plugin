@@ -10,7 +10,7 @@ There is one planned user release: the complete conversation-to-Cursor-execution
 
 The integration is in development and has not passed end-to-end acceptance. The description presents the release we are building, not a claim that it is already available. Component validation does not establish that the full product is ready to ship.
 
-The MCP URL in `mcp.json` is the existing production backend, not the studio preview service. On September 29, 2026, the Render API confirmed service `vexo-backend` is in the `Production` environment, has `NODE_ENV=production`, and uses `https://vexo-backend-uj6z.onrender.com` as its public base URL. Plugin development status and backend deployment environment are distinct. The [README](README.md#production-mcp-endpoint) records these details.
+The MCP URL in `mcp.json` is `https://api.vexoai.com/mcp`, served by Render service `vexo-prod` in the `Production` environment. Its OAuth issuer is `https://api.vexoai.com`. Production uses a dedicated release branch with automatic deployment disabled. OAuth access and refresh tokens must match their originally authorized MCP resource; existing connections to the previous hostname must reconnect. The [README](README.md#production-mcp-endpoint) records the deployment and authentication details.
 
 ## Submission fields
 

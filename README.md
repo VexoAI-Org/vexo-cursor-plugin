@@ -60,15 +60,17 @@ The plugin connects to Vexo's existing production backend:
 
 | Setting | Value |
 | --- | --- |
-| Render service | `vexo-backend` |
+| Render service | `vexo-prod` |
 | Render environment | `Production` |
 | Runtime environment | `NODE_ENV=production` |
-| MCP URL | `https://vexo-backend-uj6z.onrender.com/mcp` |
-| OAuth issuer | `https://vexo-backend-uj6z.onrender.com` |
+| MCP URL | `https://api.vexoai.com/mcp` |
+| OAuth issuer | `https://api.vexoai.com` |
 
-Verified against the Render API on September 29, 2026. The separate `vexo-backend-studio-preview` service is not used by this plugin. The `onrender.com` address is Render's service hostname; it is not a staging designation.
+The branded domain is served by Render with a managed TLS certificate. Production releases use a dedicated `production` branch with automatic deployment disabled. The separate studio preview is suspended and its production database credentials have been removed from its service configuration.
 
-The development status above describes the complete Cursor integration, not the environment hosting the existing MCP service. This distinction does not establish that hosted execution or authenticated Cursor acceptance testing is complete, or that production/staging credential isolation has been audited.
+OAuth access and refresh tokens are checked against their originally authorized MCP resource. Tokens issued for the previous Render hostname cannot be retargeted to the new resource: existing MCP users must reconnect and approve access at `https://api.vexoai.com/mcp`.
+
+The development status above describes the complete Cursor integration. The production MCP endpoint does not establish that hosted execution or authenticated Cursor acceptance testing is complete. Resource-bound tokens do not protect against compromise of the production server or its database credentials.
 
 ## Developer testing: MCP sign-in
 
@@ -77,7 +79,7 @@ You need Cursor with plugin support and an existing Vexo account with captured d
 The MCP endpoint is:
 
 ```text
-https://vexo-backend-uj6z.onrender.com/mcp
+https://api.vexoai.com/mcp
 ```
 
 The complete Cursor integration remains unreleased. The configured MCP endpoint is the production service identified above; complete authenticated acceptance testing remains pending.
@@ -91,7 +93,7 @@ For local testing, copy this directory into `~/.cursor/plugins/local/vexo`, relo
   "mcpServers": {
     "vexo": {
       "type": "http",
-      "url": "https://vexo-backend-uj6z.onrender.com/mcp"
+      "url": "https://api.vexoai.com/mcp"
     }
   }
 }

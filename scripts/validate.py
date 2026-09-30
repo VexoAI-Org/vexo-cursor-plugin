@@ -14,7 +14,7 @@ for key in ['logo','mcpServers','commands']:
  assert (root/p).exists(),key
 assert not (root/'.cursor-plugin/marketplace.json').exists(),'This is one plugin, not a marketplace collection.'
 config=json.loads((root/'mcp.json').read_text())
-assert config=={'mcpServers':{'vexo':{'type':'http','url':'https://vexo-backend-uj6z.onrender.com/mcp'}}}
+assert config=={'mcpServers':{'vexo':{'type':'http','url':'https://api.vexoai.com/mcp'}}}
 commands=list((root/'commands').glob('*.md'))
 assert {p.stem for p in commands}=={'vexo-context','vexo-brief','vexo-execute'}
 for p in commands:

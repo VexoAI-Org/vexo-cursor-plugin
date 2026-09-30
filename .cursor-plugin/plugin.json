@@ -1,7 +1,7 @@
 {
   "name": "vexo",
   "displayName": "Vexo",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Vexo integration in development: turn spoken requests into coding tasks executed by Cursor-hosted agents, with progress and results returned to Vexo.",
   "author": {
     "name": "Vexo",
